@@ -10,7 +10,6 @@
     , "npm": "1.x"
   }
   , "dependencies": {
-      "shuffle": "*"
-    , "underscore": "*"
+    "underscore": "*"
   }
 }

@@ -1,16 +1,10 @@
 var fs = require('fs')
-  , vm = require('vm');
+  , vm = require('vm')
+  , Player = require('./player');
 
-var Player = function(name){
-  return {
-      name: name.replace(/\.js$/, '')
-    , script: vm.createScript(fs.readFileSync('./players/' + name))
-    , health: 10
-    , maxHealth: 10
-  };
-};
+var players = module.exports = [];
 
-module.exports = players = [];
 fs.readdirSync('./players').forEach(function(filename){
-  players.push(new Player(filename));
+  var script = vm.createScript(fs.readFileSync('./players/' + filename));
+  players.push(new Player(filename.replace(/\.js$/, ''), script));
 });
