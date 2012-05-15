@@ -40,9 +40,10 @@ Player.prototype.rest = function(){
   if(!this.alive)
     return;
 
-  this.health += 10;
-  if(this.health > this.maxHealth)
-    this.health = this.maxHealth;
+  var amount = 10;
+  this.health += this.health + amount > this.maxHealth
+    ? this.maxHealth - this.health
+    : amount;
 };
 
 Player.prototype.gainXp = function(xp){
@@ -51,7 +52,7 @@ Player.prototype.gainXp = function(xp){
 
   this.xp += xp;
   if(this.xp >= LEVEL_THRESHOLDS[this.level]){
-    console.log('^ %s levelled up!', this.name);
+    console.log('^ %s leveled up!', this.name);
     this.level++;
     if(STRENGTH_INDEX[this.level])
       this.strength = STRENGTH_INDEX[this.level];

@@ -4,7 +4,7 @@ var Monster = module.exports = function(){
 };
 
 Monster.prototype.tick = function(world, cb){
-  //noop
+  //noop (implement for each monster)
 };
 
 Monster.prototype.attack = function(target){
@@ -32,9 +32,10 @@ Monster.prototype.rest = function(){
   if(!this.alive)
     return;
 
-  this.health += 10;
-  if(this.health > this.maxHealth)
-    this.health = this.maxHealth;
+  var amount = 10;
+  this.health += this.health + amount > this.maxHealth
+    ? this.maxHealth - this.health
+    : amount;
 };
 
 Monster.prototype.gainXp = function(xp){
