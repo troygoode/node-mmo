@@ -3,8 +3,7 @@ var sandbox = require('./sandbox')
   , Rat = require('./monsters/rat');
 
 players.forEach(function(player){
-  player.tick = player.script.runInNewContext(sandbox());
-  player.tick.bind(null);
+  player.tick = player.script.runInNewContext(sandbox()).bind(null);
 });
 
 // create 2 rats for every 1 player
