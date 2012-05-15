@@ -1,15 +1,16 @@
 var _ = require('underscore')
   , world = require('./world')
   , actions = require('./actions')(world)
-  , ROUNDS = 50
-  , DEBUG = false;
+  , ROUNDS = 50;
 
 var proxyWorld = function(){
   return {
     players: world.players.map(function(p){
       return {
-          name: p.name
-        , isAlive: p.health > 0
+          type: p.type
+        , name: p.name
+        , alive: p.health > 0
+        , level: p.level ? p.level : 0
       };
     })
   };
@@ -20,8 +21,6 @@ for(var round = 0; round < ROUNDS; round++){
   var players = world.players.filter(function(p){ return p.alive; });
   if(players.length === 1){
     console.log('WINNER: %s', players[0].name);
-    console.log('========================================');
-    console.log(world);
     break;
   }
 
@@ -29,12 +28,12 @@ for(var round = 0; round < ROUNDS; round++){
   players = _.shuffle(players);
 
   // begin the round
-  console.log('ROUND %d', round);
+  console.log('ROUND %d', round + 1);
   actions.beginRound();
 
   // give each player their turn
   players.forEach(function(player){
-    console.log('----------------------------------------\nPlayer: %s', player.name);
+    console.log('----------------------------------------\n%s: %s (%d/%d)', player.type, player.name, player.health, player.maxHealth);
     player.tick(proxyWorld(), function(action, target){
       actions.execute(player, action, target);
     });
@@ -43,10 +42,4 @@ for(var round = 0; round < ROUNDS; round++){
   // end the round
   actions.endRound();
   console.log('========================================');
-
-  // !!! debug
-  if(DEBUG){
-    console.log(world);
-    console.log('========================================');
-  }
 }

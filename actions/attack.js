@@ -26,6 +26,7 @@ module.exports = function(world){
 
         // if the target died, reward each attacker
         if(!target.alive){
+          console.log('! %s has been killed.', target.name);
           var xp = target.maxHealth / attack.attackers.length;
           attack.attackers.forEach(function(attacker){
             if(attacker.alive)
