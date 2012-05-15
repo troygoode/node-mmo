@@ -41,6 +41,8 @@ Player.prototype.rest = function(){
     return;
 
   this.health += 10;
+  if(this.health > this.maxHealth)
+    this.health = this.maxHealth;
 };
 
 Player.prototype.gainXp = function(xp){
