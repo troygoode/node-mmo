@@ -4,6 +4,7 @@ var sandbox = require('./sandbox')
 
 players.forEach(function(player){
   player.tick = player.script.runInNewContext(sandbox());
+  player.tick.bind(null);
 });
 
 // create 2 rats for every 1 player
